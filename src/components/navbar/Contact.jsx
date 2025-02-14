@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import Navbar from "../navbar/navbar";
-
+import Navbar from "../navbar/Navbar"; // Ensure correct path
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +11,7 @@ export default function Contact() {
   });
 
   const [isSent, setIsSent] = useState(false);
+  const [error, setError] = useState(null); // To handle errors
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,12 +19,12 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     emailjs
       .send(
         "service_ko06an8", 
         "template_mh4146l", 
-        formData,
+        formData, 
         "CeRmOruHnXKzjktdx" 
       )
       .then(
@@ -32,9 +32,12 @@ export default function Contact() {
           console.log("SUCCESS!", response.status, response.text);
           setIsSent(true);
           setFormData({ name: "", email: "", message: "" }); 
+          setError(null);
         },
         (error) => {
           console.error("FAILED...", error);
+          setError("Something went wrong, please try again later."); // Show error message
+          setIsSent(false);
         }
       );
   };
@@ -66,6 +69,17 @@ export default function Contact() {
             className="text-green-400 font-semibold"
           >
             ✅ Your message has been sent successfully!
+          </motion.p>
+        )}
+
+        {error && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-red-400 font-semibold"
+          >
+            ❌ {error}
           </motion.p>
         )}
 
@@ -120,3 +134,4 @@ export default function Contact() {
     </div>
   );
 }
+
