@@ -2,48 +2,76 @@ import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineUnlock } from "react-icons/ai";
-
-
-
-
+import API from "../../utils/API"; // Ensure correct API import
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Logging in with:", { email, password, rememberMe });
-    navigate("/");
+    setError(""); // Reset previous errors
+
+    console.log(" Sending Login Request", { email, password });
+
+    try {
+      const response = await API.post("/users/login", { email, password });
+
+      console.log("Login Success:", response.data);
+
+      // Save session if 'Remember Me' is checked
+      if (rememberMe) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      } else {
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      alert("Login successful!");
+      navigate("/Home"); // Redirect after login
+    } catch (err) {
+      console.error("Login error:", err);
+
+      if (err.response) {
+        // Show backend message
+        setError(err.response.data || "Invalid credentials.");
+      } else {
+        setError("Network error. Please check your connection.");
+      }
+    }
   };
 
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url(/image1.jpg)" }} 
+      style={{ backgroundImage: "url(/image1.jpg)" }}
     >
       <div className="absolute inset-0 backdrop-blur-md bg-black bg-opacity-30"></div>
-      
-{/* Login Form */}
- <div className="bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-96">
+
+      {/* Login Form */}
+      <div className="relative bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 w-96">
         <h1 className="text-4xl text-white font-bold text-center mb-6">Login</h1>
+
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
         <form onSubmit={handleSubmit}>
           {/* Email Field */}
           <div className="relative my-4">
             <input
               type="email"
               id="email"
-              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="block w-72 py-2 px-0 text-sm text-white bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-blue-600 peer"
               required
+              placeholder=" "
+              autoComplete="email" //  Fixes autofill issue
             />
             <label
               htmlFor="email"
-              className="absolute text-sm text-white transform -translate-y-6 scale-75 top-3 -z-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute text-sm text-white transform -translate-y-6 scale-75 top-3 left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Your Email
             </label>
@@ -55,15 +83,16 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="block w-72 py-2 px-0 text-sm text-white bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-blue-600 peer"
               required
+              placeholder=" "
+              autoComplete="current-password" // Fixes autofill issue
             />
             <label
               htmlFor="password"
-              className="absolute text-sm text-white transform -translate-y-6 scale-75 top-3 -z-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute text-sm text-white transform -translate-y-6 scale-75 top-3 left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Your Password
             </label>
@@ -72,14 +101,14 @@ const Login = () => {
 
           {/* Remember Me & Forgot Password */}
           <div className="flex justify-between items-center my-4">
-            <div className="flex gap-2 items-center ">
+            <div className="flex gap-2 items-center">
               <input
                 type="checkbox"
                 id="remember"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
               />
-              <label htmlFor="remember">Remember Me</label>
+              <label htmlFor="remember" className="text-white">Remember Me</label>
             </div>
             <Link to="/forgot-password" className="text-blue-500">
               Forgot password?
@@ -95,7 +124,7 @@ const Login = () => {
           </button>
 
           {/* Create Account Link */}
-          <div className="mt-4 text-center text-shadow">
+          <div className="mt-4 text-center">
             <span>
               New Here?{" "}
               <Link className="text-blue-500" to="/register">
@@ -110,4 +139,7 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
 
