@@ -1,55 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import Sidebar from "./Sidebar"; // Sidebar component
-import Header from "./Header"; // Header component
+import React, { useState } from "react";
+import { Menu } from "lucide-react";
+import { Sidebar } from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 
-const Home = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+export default function Home() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Simulating a check for a logged-in user (you can replace this with your actual logic)
-    const user = localStorage.getItem("user"); // Check if there's a logged-in user in localStorage
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
-
-  const handleSidebarToggle = () => {
-    setIsSidebarOpen((prevState) => !prevState);
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle("dark");
   };
 
-  // if (!isLoggedIn) {
-  //   // Redirect to login if the user is not logged in
-  //   window.location.href = "/login"; // Or use navigate if you're using react-router-dom
-  //   return null;
-  // }
-
   return (
-    <div>
-      <Header onSidebarToggle={handleSidebarToggle} />
-      <div className="flex">
-        {isSidebarOpen && <Sidebar />}
-        <div className="content-container flex-1 p-4">
-          {children}
-        </div>
-      </div>
-      <Routes>
-        <Route path="/" element={
-          <div>
-            <h2 className="text-xl text-white mb-4">
-              Welcome to Crypto Stock Hub
-            </h2>
-            {/* Main content will go here */}
+    <div className={`w-full min-h-screen ${isDarkMode ? "dark bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}`}>
+      <main className="w-full min-h-screen p-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-2xl font-bold">CryptoStockHub</h1>
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+            >
+              <Menu size={24} />
+            </button>
           </div>
-        } /> 
-      </Routes>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-md shadow-lg">
+              <h2 className="text-xl font-semibold mb-4">Recent Posts</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Your feed is empty. Start connecting with others!
+              </p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-md shadow-lg">
+              <h2 className="text-xl font-semibold mb-4">Learning Resources</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Explore our beginner, intermediate, and advanced courses.
+              </p>
+            </div>
+            <div className="p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-md shadow-lg">
+              <h2 className="text-xl font-semibold mb-4">AI Assistant</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Get personalized crypto and stock insights with our AI chat.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Sidebar Component */}
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        isDarkMode={isDarkMode}
+        onThemeToggle={toggleTheme}
+      />
     </div>
   );
-};
-export default Home;
+}
+
+
+
 

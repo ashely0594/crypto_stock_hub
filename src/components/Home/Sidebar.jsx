@@ -1,150 +1,102 @@
-import { useState } from "react";
-import "./Sidebar.css"; // Adjust the path if necessary
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
+import React, { useState } from "react";
+import {
+  Home,
+  BookOpen,
+  MessageSquare,
+  Users,
+  Plus,
+  Sun,
+  Moon,
+  ChevronLeft,
+  Newspaper,
+  TrendingUp,
+  GraduationCap,
+  ChevronDown,
+  ChevronUp,
+  LogOut,
+  Settings,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
+export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const navigate = useNavigate();
 
-// Menu items for the carousel and navigation
-const menuItems = [
-  { name: "Home", icon: "home" },
-  { name: "Apps", icon: "dashboard" },
-  { name: "Create", icon: "add_box" },
-  { name: "Favourites", icon: "favorite" },
-];
-
-// Icon component to render material icons
-export const Icon = ({ icon }) => (
-  <span className="material-symbols-outlined">{icon}</span>
-);
-
-// Carousel component displaying the menu items
-const MyCarousel = () => {
-  return (
-    <Carousel
-      showArrows={false}
-      showStatus={false}
-      showThumbs={false}
-      showIndicators={false}
-      swipeable={true}
-      emulateTouch={true}
-    >
-      {menuItems.map((item, index) => (
-        <div key={index}>
-          <Icon icon={item.icon} />
-          <span>{item.name}</span>
-        </div>
-      ))}
-    </Carousel>
-  );
-};
-
-// Navigation tabs component
-const tabs = ["menu", "lock", "settings"];
-
-const Nav = ({ activeTab, onTabClicked }) => (
-  <header className="tabs">
-    {tabs.map((tab, index) => (
-      <button
-        key={tab}
-        type="button"
-        onClick={() => onTabClicked(index)}
-        className={`${activeTab === index ? "active" : ""}`}
-      >
-        <Icon icon={tab} />
-      </button>
-    ))}
-    <div
-      className="underline"
-      style={{
-        translate: `${activeTab * 100}% 0`,
-      }}
-    />
-  </header>
-);
-
-const NavButton = ({ name, icon }) => (
-  <button type="button">
-    {icon && <Icon icon={icon} />}
-    <span>{name}</span>
-  </button>
-);
-
-const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
-
-  const handleTabClicked = (index) => setActiveTab(index);
-
-  // Toggle dark mode
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Clear user session
+    sessionStorage.removeItem("user");
+    navigate("/"); // ✅ Redirect to Landing Page (Correct Route)
   };
 
   return (
-    <aside className={`sidebar ${isDarkMode ? "dark-mode" : "light-mode"}`}>
-      <div>
-        <Nav activeTab={activeTab} onTabClicked={handleTabClicked} />
-        
-        {/* Carousel displaying menu items */}
-        <MyCarousel />
-
-        {/* Content for the sidebar */}
-        <div className="sidebar-content">
-          <div>
-            <form>
-              <div className="textbox">
-                <span className="material-symbols-outlined">account_circle</span>
-                <input placeholder="Name" type="text" required />
-              </div>
-              <div className="textbox">
-                <span className="material-symbols-outlined">lock</span>
-                <input placeholder="Password" type="password" required />
-              </div>
-              <div className="textbox">
-                <span className="material-symbols-outlined">email</span>
-                <input placeholder="Email" type="text" required />
-              </div>
-            </form>
+    <div
+      className={`fixed top-0 right-0 h-full w-64 transform transition-transform duration-300 ease-in-out ${
+        isOpen ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
+      <div className="h-full backdrop-blur-md bg-white/30 dark:bg-gray-800/30 shadow-lg border-l border-gray-200 dark:border-gray-700">
+        <div className="p-4 flex flex-col h-full">
+          <button onClick={onClose} className="mb-8 hover:text-blue-500">
+            <ChevronLeft size={24} />
+          </button>
+          <div className="space-y-6 flex-grow">
+            <NavItem icon={<Home />} label="Dashboard" />
+            <NavItem icon={<Users />} label="Social Feed" />
+            <NavItem icon={<BookOpen />} label="Resources" />
+            <NavItem icon={<GraduationCap />} label="Courses" />
+            <NavItem icon={<MessageSquare />} label="AI Chat" />
+            <NavItem icon={<TrendingUp />} label="Market Trends" />
+            <NavItem icon={<Newspaper />} label="News" />
+            <NavItem icon={<Plus />} label="Create Post" />
           </div>
 
-          {/* Settings and mode toggles */}
-          <div>
-            <form>
-              <div className="row">
-                <div className="switch-label">Dark Mode</div>
-                <span className="switch">
-                  <input
-                    id="switch-round"
-                    type="checkbox"
-                    checked={isDarkMode}
-                    onChange={toggleTheme} // Toggle theme on checkbox change
-                  />
-                  <label htmlFor="switch-round"></label>
-                </span>
+          {/* Account Section */}
+          <div className="mt-auto mb-4">
+            <button
+              onClick={() => setIsAccountOpen(!isAccountOpen)}
+              className="w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-between"
+            >
+              <span className="font-medium">Account</span>
+              {isAccountOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
+            {isAccountOpen && (
+              <div className="mt-2 ml-2 space-y-2">
+                <NavItem icon={<Settings size={20} />} label="Settings" />
+                <button
+                  onClick={handleLogout} // ✅ Logout Button
+                  className="w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+                >
+                  <LogOut size={20} />
+                  <span>Logout</span>
+                </button>
               </div>
-              <div className="row">
-                <div className="switch-label">Accessibility Mode</div>
-                <span className="switch">
-                  <input id="switch-round" type="checkbox" />
-                  <label htmlFor="switch-round"></label>
-                </span>
-              </div>
-              <div className="row">
-                <div className="switch-label">Quirks Mode</div>
-                <span className="switch">
-                  <input id="switch-round" type="checkbox" />
-                  <label htmlFor="switch-round"></label>
-                </span>
-              </div>
-            </form>
+            )}
           </div>
+
+          {/* Theme Toggle Button */}
+          <button
+            onClick={onThemeToggle}
+            className="w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            <span>{isDarkMode ? "Light Mode" : "Dark Mode"}</span>
+          </button>
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 
-export default Sidebar;
+const NavItem = ({ icon, label, className = "" }) => (
+  <button className={`w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 ${className}`}>
+    {icon}
+    <span>{label}</span>
+  </button>
+);
+
+
+
+
 
 
 

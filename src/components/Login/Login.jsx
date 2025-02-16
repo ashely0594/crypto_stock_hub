@@ -30,7 +30,7 @@ const Login = () => {
       }
 
       alert("Login successful!");
-      navigate("/Home"); // Redirect after login
+      navigate("/Home"); 
     } catch (err) {
       console.error("Login error:", err);
 

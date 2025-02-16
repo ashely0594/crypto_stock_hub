@@ -1,12 +1,11 @@
 import React from "react";
 import Background from "../background/Background";
-import Navbar from "../navbar/Navbar";
 import Features from "../navbar/Features";
 import About from "../navbar/About";
 import Contact from "../navbar/Contact";
 import Footer from "../Footer/Footer";
 import stockImage from "../../assets/images/Stock.jpg";
-  import 'animate.css';
+import "animate.css";
 
 export default function LandingPage() {
   return (
@@ -14,13 +13,12 @@ export default function LandingPage() {
       {/* Background Video */}
       <Background />
 
-      {/* Navbar */}
-      <Navbar />
-
       {/* Scrollable Sections */}
       <main className="flex-grow relative z-10">
         <section id="home" className="h-screen flex items-center justify-left text-white">
-          <h1 className="text-5xl font-bold animate__animated animate__lightSpeedInLeft  ">Welcome to Crypto Stock Hub</h1>
+          <h1 className="text-5xl font-bold animate__animated animate__lightSpeedInLeft">
+            Welcome to Crypto Stock Hub
+          </h1>
         </section>
 
         <section 
@@ -51,4 +49,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
