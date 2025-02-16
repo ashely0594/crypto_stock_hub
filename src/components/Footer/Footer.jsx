@@ -1,8 +1,13 @@
 import React from "react";
+import discordIcon from "../../assets/images/discord.svg";
+import facebookIcon from "../../assets/images/facebook.svg";
+import instagramIcon from "../../assets/images/instagram.svg";
+import linkedinIcon from "../../assets/images/linkedin.svg";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full h-[300px] overflow-hidden bg-[#08192D]">
+    <footer className="relative w-full h-[250px] overflow-hidden bg-[#08192D] flex flex-col justify-center items-center">
+      {/* Animated Waves */}
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +71,45 @@ export default function Footer() {
           </use>
         </g>
       </svg>
+
+      {/* Social Media Icons (Smaller & White) */}
+      <div className="relative z-10 flex space-x-6 mt-4">
+        <a href="https://discord.com" target="_blank" rel="noopener noreferrer">
+          <img src={discordIcon} alt="Discord" className="w-8 h-8 filter invert hover:scale-110 transition duration-300" />
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <img src={facebookIcon} alt="Facebook" className="w-8 h-8 filter invert hover:scale-110 transition duration-300" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <img src={instagramIcon} alt="Instagram" className="w-8 h-8 filter invert hover:scale-110 transition duration-300" />
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <img src={linkedinIcon} alt="LinkedIn" className="w-8 h-8 filter invert hover:scale-110 transition duration-300" />
+        </a>
+      </div>
+
+      {/* Footer Navigation Links */}
+      <nav className="relative z-10 mt-3">
+        <ul className="flex space-x-6 text-white text-sm">
+          <li>
+            <a href="#home" className="hover:text-blue-400">Home</a>
+          </li>
+          <li>
+            <a href="#about" className="hover:text-blue-400">About</a>
+          </li>
+          <li>
+            <a href="#contact" className="hover:text-blue-400">Contact</a>
+          </li>
+          <li>
+            <a href="#features" className="hover:text-blue-400">Features</a>
+          </li>
+        </ul>
+      </nav>
     </footer>
   );
 }
+
+
 
 
 

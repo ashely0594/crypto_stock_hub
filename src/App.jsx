@@ -6,8 +6,8 @@ import Features from "./components/navbar/Features";
 import Navbar from "./components/navbar/Navbar";
 import About from "./components/navbar/About";
 import Contact from "./components/navbar/Contact";
-import  Header  from "./components/Home/Home";
-import  Sidebar from "./components/Home/Sidebar";
+import  Home from "./components/Home/Home";
+
 
 export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -25,7 +25,7 @@ export function AppLayout() {
           <h2 className="text-xl text-white mb-4">
             Welcome to Crypto Stock Hub
           </h2>
-          {/* Main content will go here */}
+        
         </main>
       </div>
     </div>
@@ -42,6 +42,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </>
   );

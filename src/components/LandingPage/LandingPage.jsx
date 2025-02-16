@@ -5,7 +5,8 @@ import Features from "../navbar/Features";
 import About from "../navbar/About";
 import Contact from "../navbar/Contact";
 import Footer from "../Footer/Footer";
-import stockImage from "../../assets/images/Stock.jpg"; // Import the image
+import stockImage from "../../assets/images/Stock.jpg";
+  import 'animate.css';
 
 export default function LandingPage() {
   return (
@@ -18,8 +19,8 @@ export default function LandingPage() {
 
       {/* Scrollable Sections */}
       <main className="flex-grow relative z-10">
-        <section id="home" className="h-screen flex items-center justify-center text-white">
-          <h1 className="text-5xl font-bold">Welcome to Crypto Stock Hub</h1>
+        <section id="home" className="h-screen flex items-center justify-left text-white">
+          <h1 className="text-5xl font-bold animate__animated animate__lightSpeedInLeft  ">Welcome to Crypto Stock Hub</h1>
         </section>
 
         <section 

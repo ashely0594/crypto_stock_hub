@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineUnlock } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import API from "../../utils/API"; // Ensure correct import path
+import API from "../../utils/API"; 
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -23,7 +23,7 @@ const Register = () => {
     }
 
     try {
-      const response = await API.post("/users/register", { 
+      const response = await API.post("/signup", { 
         username, firstName, lastName, email, password
       });
 
@@ -159,11 +159,11 @@ const Register = () => {
 
           <button 
             type="submit" 
-            className="w-full text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-emerald-600 hover:text-white py-2 transition duration-300">
+            className="w-full text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-emerald-600 hover:text-white py-2 transition duration-300 text-center">
             Register
           </button>
 
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center text-white">
             <span>Already registered? <Link className="text-blue-500" to="/login">Login</Link></span>
           </div>
 
