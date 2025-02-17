@@ -5,7 +5,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
 import Navbar from "./components/navbar/Navbar"; 
-
+import SocialFeed from "./components/User/SocialFeed";
 const App = () => {
   return (
     <>
@@ -27,6 +27,7 @@ const App = () => {
 
         {/* Home Page (No Navbar) */}
         <Route path="/home" element={<Home />} />
+        <Route path="/social-feed" element={<SocialFeed />} />
       </Routes>
     </>
   );

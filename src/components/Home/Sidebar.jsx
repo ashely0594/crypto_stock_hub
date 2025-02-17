@@ -25,7 +25,7 @@ export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
   const handleLogout = () => {
     localStorage.removeItem("user"); // Clear user session
     sessionStorage.removeItem("user");
-    navigate("/"); // ✅ Redirect to Landing Page (Correct Route)
+    navigate("/"); // Redirect to Landing Page
   };
 
   return (
@@ -40,8 +40,8 @@ export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
             <ChevronLeft size={24} />
           </button>
           <div className="space-y-6 flex-grow">
-            <NavItem icon={<Home />} label="Dashboard" />
-            <NavItem icon={<Users />} label="Social Feed" />
+            <NavItem icon={<Home />} label="Dashboard" onClick={() => navigate("/home")} />
+            <NavItem icon={<Users />} label="Social Feed" onClick={() => navigate("/social-feed")} />
             <NavItem icon={<BookOpen />} label="Resources" />
             <NavItem icon={<GraduationCap />} label="Courses" />
             <NavItem icon={<MessageSquare />} label="AI Chat" />
@@ -63,7 +63,7 @@ export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
               <div className="mt-2 ml-2 space-y-2">
                 <NavItem icon={<Settings size={20} />} label="Settings" />
                 <button
-                  onClick={handleLogout} // ✅ Logout Button
+                  onClick={handleLogout}
                   className="w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
                 >
                   <LogOut size={20} />
@@ -87,12 +87,17 @@ export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
   );
 };
 
-const NavItem = ({ icon, label, className = "" }) => (
-  <button className={`w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 ${className}`}>
+const NavItem = ({ icon, label, onClick, className = "" }) => (
+  <button
+    onClick={onClick}
+    className={`w-full p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-2 ${className}`}
+  >
     {icon}
     <span>{label}</span>
   </button>
 );
+
+
 
 
 
