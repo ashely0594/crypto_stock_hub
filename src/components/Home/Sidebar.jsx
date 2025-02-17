@@ -42,12 +42,12 @@ export const Sidebar = ({ isOpen, onClose, isDarkMode, onThemeToggle }) => {
           <div className="space-y-6 flex-grow">
             <NavItem icon={<Home />} label="Dashboard" onClick={() => navigate("/home")} />
             <NavItem icon={<Users />} label="Social Feed" onClick={() => navigate("/social-feed")} />
-            <NavItem icon={<BookOpen />} label="Resources" />
-            <NavItem icon={<GraduationCap />} label="Courses" />
+            <NavItem icon={<BookOpen />} label="Resources" onClick={() => navigate("/resources")}/>
+            <NavItem icon={<GraduationCap />} label="Courses" onClick={() => navigate("/courses")} />
             <NavItem icon={<MessageSquare />} label="AI Chat" />
             <NavItem icon={<TrendingUp />} label="Market Trends" />
             <NavItem icon={<Newspaper />} label="News" />
-            <NavItem icon={<Plus />} label="Create Post" />
+           
           </div>
 
           {/* Account Section */}

@@ -1,66 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Image, Send, Trash2, Edit } from "lucide-react";
 import API from "../../utils/API";
-
 export default function CreatePost() {
   const [postText, setPostText] = useState("");
   const [posts, setPosts] = useState([]); // Store posts in local state
   const [editingPostId, setEditingPostId] = useState(null);
   const [editedText, setEditedText] = useState("");
-  const [user, setUser] = useState(null); // Ensure user is retrieved
-
-  // Retrieve user from localStorage/sessionStorage
-  useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-    if (loggedUser && loggedUser.id) {
-      setUser(loggedUser);
-    } else {
-      console.error("User not found. Ensure the user is logged in.");
-    }
-  }, []);
 
   const handlePostSubmit = async () => {
-    if (!user || !user.id) {
-      console.error("User is not defined or missing an ID.");
-      return;
-    }
+    if (postText.trim() === "") return;
 
-    if (postText.trim() === "") {
-      console.warn("Post text cannot be empty.");
-      return;
-    }
-
+    try {
+        const response = await API.post(
+          `/api/posts/create?userId=${user.userId}`,  // ✅ Fix: Append `userId` correctly in query param
+          {
+            title: "User Post", // You can modify this to allow title input
+            content: postText,
+          }
+        );
+      
+        setPosts((prevPosts) => [response.data, ...prevPosts]);
+        setPostText(""); // Clear input after posting
+      } catch (error) {
+        console.error("Error creating post:", error.response ? error.response.data : error.message);
+      }
+      
+      const postPayload = {
+        title: postText.trim() ? postText : "Untitled Post",  // Assign default title if missing
+        content: postText,
+      };
+    
+    // Create a new post object
     const newPost = {
-      title: "User Post", // Default title
-      content: postText,
+      id: Date.now(), // Unique ID
+      text: postText,
+      timestamp: new Date().toLocaleString(),
     };
 
-    console.log("Sending Post Request:", newPost, `UserId: ${user.id}`);
-
-    try {
-      const response = await API.post(
-        "/api/posts/create",
-        newPost,
-        { params: { userId: user.id } } // Pass userId as query parameter
-      );
-
-      console.log("Post Created Successfully:", response.data);
-
-      // Add new post to local state
-      setPosts((prevPosts) => [response.data, ...prevPosts]);
-      setPostText(""); // Clear input after posting
-    } catch (error) {
-      console.error("Error creating post:", error.response ? error.response.data : error.message);
-    }
+    // Append the new post to the list
+    setPosts([newPost, ...posts]);
+    setPostText(""); // Clear input after posting
   };
 
-  const handleDeletePost = async (id) => {
-    try {
-      await API.delete(`/api/posts/delete`, { params: { id, userId: user.id } });
-      setPosts(posts.filter((post) => post.id !== id));
-    } catch (error) {
-      console.error("Error deleting post:", error.response ? error.response.data : error.message);
-    }
+  const handleDeletePost = (id) => {
+    // Remove post by filtering out the one with the given id
+    setPosts(posts.filter((post) => post.id !== id));
   };
 
   const handleEditPost = (post) => {
@@ -68,19 +52,13 @@ export default function CreatePost() {
     setEditedText(post.text);
   };
 
-  const handleSaveEdit = async () => {
-    try {
-      const response = await API.put(
-        `/api/posts/edit`,
-        { title: "Updated Post", content: editedText },
-        { params: { id: editingPostId, userId: user.id } }
-      );
-      console.log("Post Updated Successfully:", response.data);
-      setPosts(posts.map((post) => (post.id === editingPostId ? { ...post, text: editedText } : post)));
-      setEditingPostId(null);
-    } catch (error) {
-      console.error("Error updating post:", error.response ? error.response.data : error.message);
-    }
+  const handleSaveEdit = () => {
+    setPosts(
+      posts.map((post) =>
+        post.id === editingPostId ? { ...post, text: editedText } : post
+      )
+    );
+    setEditingPostId(null);
   };
 
   return (
@@ -139,7 +117,7 @@ export default function CreatePost() {
               </div>
             ) : (
               <>
-                <p className="text-gray-900 dark:text-white">{post.content}</p>
+                <p className="text-gray-900 dark:text-white">{post.text}</p>
                 <span className="text-sm text-gray-500 dark:text-gray-400">{post.timestamp}</span>
               </>
             )}
@@ -167,6 +145,4 @@ export default function CreatePost() {
     </div>
   );
 }
-
-
 

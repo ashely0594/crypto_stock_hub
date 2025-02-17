@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { 
   ChevronRight, ChevronDown, MessageCircle, LayoutGrid, Home, BookOpen, MessageSquare, 
-  Users, TrendingUp, Newspaper, Settings, Moon, Sun
+  Users, TrendingUp, Newspaper, Settings, Moon, Sun, GraduationCap
 } from "lucide-react";
 import API from "../../utils/API";
 import { Sidebar } from "../Home/Sidebar"; 
@@ -82,20 +82,17 @@ export default function SocialFeed() {
             ) : (
               <div className="p-4">
                 <h2 className="text-lg font-semibold mb-4">Menu</h2>
-                <button 
-                  onClick={() => navigate("/home")}
-                  className="flex items-center gap-2 w-full px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
-                >
-                  <Home size={20} /> Dashboard
-                </button>
-                <div className="mt-4 space-y-2">
-                  <MenuItem icon={<Users />} label="Social Feed" />
-                  <MenuItem icon={<BookOpen />} label="Resources" />
-                  <MenuItem icon={<TrendingUp />} label="Market Trends" />
-                  <MenuItem icon={<MessageSquare />} label="AI Chat" />
-                  <MenuItem icon={<Newspaper />} label="News" />
-                  <MenuItem icon={<Settings />} label="Account Settings" />
-                </div>
+
+                {/* Sidebar Navigation Menu */}
+                <NavItem icon={<Home />} label="Dashboard" onClick={() => navigate("/home")} />
+                <NavItem icon={<Users />} label="Social Feed" onClick={() => navigate("/social-feed")} />
+                <NavItem icon={<BookOpen />} label="Resources" onClick={() => navigate("/resources")}/>
+                <NavItem icon={<GraduationCap />} label="Courses" onClick={() => navigate("/courses")} />
+                <NavItem icon={<MessageSquare />} label="AI Chat" />
+                <NavItem icon={<TrendingUp />} label="Market Trends" />
+                <NavItem icon={<Newspaper />} label="News" />
+
+                {/* Dark Mode Toggle */}
                 <div className="mt-6">
                   <button 
                     onClick={toggleTheme}
@@ -154,12 +151,17 @@ export default function SocialFeed() {
 }
 
 /** Sidebar Menu Items */
-const MenuItem = ({ icon, label }) => (
-  <button className="w-full flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800">
+const NavItem = ({ icon, label, onClick }) => (
+  <button 
+    onClick={onClick}
+    className="w-full flex items-center gap-2 p-2 rounded-lg hover:bg-gray-800"
+  >
     {icon}
     <span>{label}</span>
   </button>
 );
+
+
 
 
 
