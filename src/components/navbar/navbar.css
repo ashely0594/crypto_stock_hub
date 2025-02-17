@@ -1,9 +1,9 @@
-.navbar{
+.navbar {
     position: fixed; 
     top: 0; 
     left: 0;
     right: 0; 
-    display:flex; 
+    display: flex; 
     justify-content: space-between;
     align-items: center;
     padding: 15px 6%; 
@@ -13,45 +13,53 @@
     border-radius: 100px; 
     z-index: 999;
     transition: all 0.2s ease-in-out; 
-  }
-  .navbar.hidden {
+}
+
+.navbar.hidden {
     opacity: 0; 
     transform: translateY(-50px); 
-  }
-  
-  .navbar ul{
-      display:flex;
-      gap:20px;
-      list-style:none;
-      margin-left: 500px;
-      font-size: 16px;
-  }
-  
-  .navbar li{
-      cursor: pointer;
-      transition: all 0.2s ease-in-out
-      
-  }
-  
-  .navbar li:hover{
-      color: #515151;
-      transition: all 0.2s ease-in-out
-  }
-  
-  
-  .nav-right{
-      display: flex;
-      align-items: center;
-      gap: max(1vw, 15px);
-      
-  }
- 
- 
-     .nav-right button {
-         padding: 10px 20px;
-         font-size: 12px;
-         border-radius: 50px; 
-         width: auto;
-         height: auto; 
-         cursor: pointer;
-     }
+}
+
+
+.nav-center {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+}
+
+
+.navbar ul {
+    display: flex;
+    gap: 30px; 
+    list-style: none;
+    font-size: 16px;
+    margin: 0; 
+    padding: 0;
+}
+
+.navbar li {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar li:hover {
+    color: #bbb;
+}
+
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: max(1vw, 15px);
+}
+
+
+.nav-right button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 50px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
