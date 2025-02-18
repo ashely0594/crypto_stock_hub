@@ -23,9 +23,13 @@ const Register = () => {
     }
 
     try {
-      const response = await API.post("/signup", { 
-        username, firstName, lastName, email, password
-      });
+      const response = await API.post("/api/signup", {
+        username, 
+        firstName, 
+        lastName, 
+        email, 
+        password
+    });
 
       if (response.status === 201) {
         alert("User registered successfully!");

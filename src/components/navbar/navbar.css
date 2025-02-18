@@ -1,40 +1,29 @@
 .navbar {
-    position: fixed; 
-    top: 0; 
+    position: fixed;
+    top: 0;
     left: 0;
-    right: 0; 
-    display: flex; 
-    justify-content: space-between;
+    width: 100%;
+    backdrop-filter: blur(40px); /* Blurred background */
+    background: rgba(58, 57, 57, 0.1); 
+    border-radius: 200px;
+    
+    padding: 15px 30px;
+    display: flex;
     align-items: center;
-    padding: 15px 6%; 
-    color: #ddd;
-    border-bottom: 1px solid #3c3c3c;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 100px; 
-    z-index: 999;
-    transition: all 0.2s ease-in-out; 
-}
+    justify-content: space-between;
+    z-index: 1000;
+  }
+  
+  .nav-center {
+    margin-left: 900px;  
+    margin-top: 4px;
 
-.navbar.hidden {
+
+  }
+
+  .navbar.hidden {
     opacity: 0; 
     transform: translateY(-50px); 
-}
-
-
-.nav-center {
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-}
-
-
-.navbar ul {
-    display: flex;
-    gap: 30px; 
-    list-style: none;
-    font-size: 16px;
-    margin: 0; 
-    padding: 0;
 }
 
 .navbar li {
@@ -42,24 +31,89 @@
     transition: all 0.2s ease-in-out;
 }
 
-.navbar li:hover {
-    color: #bbb;
-}
+  /* Navbar Links - Fully Visible Text */
+  .navbar a {
+    color: white !important; /* Ensure text is white */
+    font-weight: bold; /* Make text bold */
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  
+  }
+  
+  /* Hover Effect */
+  .navbar a:hover {
+    color: #007bff; /* Change text color on hover */
+  }
+  
+  /* Active Link Styling */
+  .navbar a.active {
+    color: #007bff;
+  }
 
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: max(1vw, 15px);
-}
 
 
-.nav-right button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 50px;
-    width: auto;
-    height: auto;
+
+
+
+.btn-4 {
+    scale: 0.70;
+    position: fixed; /* Fixed position on the screen */
+    right: 20px; /* Align to the right */
+    top: 1px; /* Add spacing from the top */
+    padding: 13px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    white-space: nowrap;
+    background: none;
     cursor: pointer;
-}
-
+    z-index: 1000; /* Ensure it stays above other elements */
+  }
+  
+  .btn-4:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #007bff; /* Updated color to blue */
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-4 span {
+    position: relative;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  .btn-4 svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #ffffff;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+  }
+  
+  .btn-4:hover:before {
+    width: 100%;
+    background: #318ff3; /* Darker blue on hover */
+  }
+  
+  .btn-4:hover svg {
+    transform: translateX(0);
+  }
+  
+  .btn-4:active {
+    transform: scale(0.95);
+  }
+  

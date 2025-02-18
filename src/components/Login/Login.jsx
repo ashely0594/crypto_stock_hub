@@ -14,25 +14,26 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset previous errors
-
     try {
-      const response = await API.post("/login", { email, password });
+      const response = await API.post("/api/login", {
+        email,
+        password
+    });
 
-      // Save session if 'Remember Me' is checked
-      if (rememberMe) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      } else {
-        sessionStorage.setItem("user", JSON.stringify(response.data));
-      }
-
-      alert("Login successful!");
-      navigate("/home");
+        if (response.data) {
+            if (rememberMe) {
+                localStorage.setItem("user", JSON.stringify(response.data));
+            } else {
+                sessionStorage.setItem("user", JSON.stringify(response.data));
+            }
+            alert("Login successful!");
+            navigate("/home");
+        }
     } catch (err) {
-      console.error("Login error:", err);
-      setError(err.response?.data || "Invalid credentials.");
+        console.error("Login error:", err);
+        setError(err.response?.data || "Invalid credentials.");
     }
-  };
+}; 
 
   return (
     <div className="relative">
@@ -51,9 +52,9 @@ const Login = () => {
             {/* Email Field */}
             <div className="relative my-4">
               <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                className="block w-72 py-2.3 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block w-72 py-2 px-0 text-sm text-white bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-blue-600 peer"
                 required placeholder=" " autoComplete="email" />
-              <label htmlFor="email" className="absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Email</label>
+              <label htmlFor="email" className="absolute text-sm text-white transform -translate-y-6 scale-75 top-3 left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Your Email</label>
               <BiUser className="absolute top-4 right-4 text-white" />
             </div>
 

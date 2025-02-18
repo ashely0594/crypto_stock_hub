@@ -15,11 +15,12 @@ export default function LandingPage() {
 
       {/* Scrollable Sections */}
       <main className="flex-grow relative z-10">
-        <section id="home" className="h-screen flex items-center justify-left text-white">
-          <h1 className="text-5xl font-bold animate__animated animate__lightSpeedInLeft">
-            Welcome to Crypto Stock Hub
-          </h1>
-        </section>
+  <section id="home" className="h-screen flex items-center justify-between text-white px-10">
+    <h1 className="text-7xl font-extrabold rubik-mono-one-regular animate__animated animate__lightSpeedInLeft w-full flex flex-col gap-32">
+      <span className="text-left w-1/2 -mt-20">Welcome to</span>
+      <span className="self-end text-white px-10 mt-20">Crypto Stock Hub</span>
+    </h1>
+  </section>
 
         <section 
           id="features" 

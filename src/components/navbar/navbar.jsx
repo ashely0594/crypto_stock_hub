@@ -51,7 +51,7 @@ const Navbar = () => {
     >
       {/* Centered Navigation Links */}
       <div className="nav-center">
-        <ul className="flex gap-8 text-white">
+        <ul className="flex gap-8 text-white text-bold">
           <li>
             <button onClick={() => handleScrollToSection("home")} className="hover:text-blue-400 cursor-pointer">
               Home
@@ -76,14 +76,14 @@ const Navbar = () => {
       </div>
 
       {/* Sign Up / Login Button */}
-      <div className="nav-right">
-        <Link to="/login" replace>
-          <button className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-full text-white">
-            Sign Up / Login
-          </button>
-        </Link>
+      <Link to="/login" className="btn-4">
+  <span>Sign Up / Login</span>
+  <svg width="24" height="24" viewBox="0 0 24 24">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</Link>
       </div>
-    </div>
+   
   );
 };
 
